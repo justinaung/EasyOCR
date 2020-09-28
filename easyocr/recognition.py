@@ -8,7 +8,7 @@ import numpy as np
 from collections import OrderedDict
 
 from .model import Model
-from .utils import CTCLabelConverter
+from .utils import CTCLabelConverter, AttnLabelConverter
 import math
 
 def contrast_grey(img):
@@ -142,7 +142,8 @@ def recognizer_predict(model, converter, test_loader, batch_max_length,\
 def get_recognizer(input_channel, output_channel, hidden_size, character,\
                    separator_list, dict_list, model_path, device = 'cpu'):
 
-    converter = CTCLabelConverter(character, separator_list, dict_list)
+    # converter = CTCLabelConverter(character, separator_list, dict_list)
+    converter = AttnLabelConverter(character)
     num_class = len(converter.character)
     model = Model(input_channel, output_channel, hidden_size, num_class)
 
